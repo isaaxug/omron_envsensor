@@ -5,6 +5,7 @@
 omron_envsensorは、pythonスクリプト内からインポートするもしくはrun.py、cat_csv.pyファイルを用いて活性化してください。これらにはroot権限が必要です。
 活性化する際には、必須パッケージをインストールした状態のraspberryPi3もしくはraspberryPiZero内から使用しなければなりません。
 必須パッケージのインストールについては **補遺1** を参照してください。
+ライブラリのインストールについては **補遺2** を参照してください。
 
 
 ### 概要
@@ -29,5 +30,12 @@ sudo apt-get install -y libboost-python-dev libboost-thread-dev libboost-python-
 
 sudo pip3 install pybluez
 sudo pip3 install pygattlib
-
 ```
+
+
+### 補遺2 インストール
+
+```shell
+sudo pip3 install https://github.com/isaaxug/omron_envsensor/archive/0.0.0.zip
+```
+
