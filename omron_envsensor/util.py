@@ -54,9 +54,9 @@ def get_companyid(pkt):
 
 # classify beacon type sent from the sensor
 def classify_beacon_packet(report):
-    if report["payload_binary"][29:31] in ['IM', u'IM']:
+    if report["payload_binary"][29:31] in ['IM', b'IM']:
         return "IM"
-    elif report["payload_binary"][29:31] in ['EP', u'EP']:
+    elif report["payload_binary"][29:31] in ['EP', b'EP']:
         return "EP"
     return "UNKNOWN"
 
