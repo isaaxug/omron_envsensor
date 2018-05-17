@@ -3,6 +3,7 @@ logger = getLogger(__name__)
 
 import struct
 import sys
+import os
 
 def packet_as_hex_string(pkt, flag_with_spacing=False,
                          flag_force_capitalize=False):
@@ -103,3 +104,6 @@ def ushort2short(val):
     else:
         short_val = val
     return short_val
+
+def getHostname():
+    return os.uname()[1]

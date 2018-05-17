@@ -5,7 +5,12 @@ setup(
     name = "omron_envsensor",
     version = omron_envsensor.__version__,
     description = ("OMRON 2JCIE-BL01 SENSOR"),
-    packages = ['pybluez', 'pygattlib'],
+    entry_points={
+        'console_scripts' : [
+            'omron_env = run:main',
+            'omron_csv = cat_csv:main',
+        ],
+    },
     classifiers = [
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",

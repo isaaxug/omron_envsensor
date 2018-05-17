@@ -2,8 +2,8 @@
 
 ### 取り扱い方
 
-omron_envsensorは、pythonスクリプト内からインポートするもしくはrun.py、cat_csv.pyファイルを用いて活性化してください。これらにはroot権限が必要です。
-活性化する際には、必須パッケージをインストールした状態のraspberryPi3もしくはraspberryPiZero内から使用しなければなりません。
+omron_envsensorは、RaspberryPi上のLinuxシステム上からpythonスクリプトからインポートもしくはrun.py、cat_csv.pyファイルを用いて活性化してください。
+活性化する際にはroot権限と、必須パッケージがインストールされていなければいけません。
 必須パッケージのインストールについては **補遺1** を参照してください。
 ライブラリのインストールについては **補遺2** を参照してください。
 
@@ -36,6 +36,18 @@ sudo pip3 install pygattlib
 ### 補遺2 インストール
 
 ```shell
-sudo pip3 install https://github.com/isaaxug/omron_envsensor/archive/0.0.1.zip
+sudo pip3 install https://github.com/isaaxug/omron_envsensor/archive/0.0.2.zip
+```
+
+### 補遺3 サンプルスクリプトの使用方法
+
+info情報
+```shell
+sudo python3 run.py
+```
+
+CSV出力
+```shell
+sudo python3 cat_csv.py > csv.csv
 ```
 
