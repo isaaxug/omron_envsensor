@@ -7,6 +7,7 @@ import math
 import sys
 import datetime
 import struct
+import json
 
 from . import util
 from .ble import ADV_TYPE_MANUFACTURER_SPECIFIC_DATA, ADV_TYPE_SHORT_LOCAL_NAME
@@ -42,6 +43,7 @@ def verify_beacon_packet(report):
 
     return True
 
+
 def verify_beacon_packet_3(report):
     # verify received beacon packet format
 
@@ -61,6 +63,7 @@ def verify_beacon_packet_3(report):
         return False
 
     return True
+
 
 if sys.version > '3':
     verify_beacon_packet = verify_beacon_packet_3
@@ -94,6 +97,7 @@ class SensorBeacon:
 
     sensor_type = "UNKNOWN"
     gateway = "UNKNOWN"
+
 
     def __init__(self, bt_address_s, sensor_type_s, gateway_s, pkt):
         self.bt_address = bt_address_s
@@ -150,6 +154,7 @@ class SensorBeacon:
         self.sensor_type = sensor_type_s
         self.gateway = gateway_s
 
+
     def return_accuracy(self, rssi, power):  # rough distance in meter
         RSSI = abs(rssi)
         if RSSI == 0:
@@ -162,8 +167,8 @@ class SensorBeacon:
             return pow(ratio, 8.0)
         accuracy = 0.69976 * pow(ratio, 7.7095) + 0.111
         # accuracy = 0.89976 * pow(ratio, 7.7095) + 0.111
-
         return accuracy
+
 
     def check_diff_seq_num(self, sensor_beacon):
         result = False
@@ -172,6 +177,7 @@ class SensorBeacon:
         else:
             result = False
         return result
+
 
     def update(self, sensor_beacon):
         sensor_beacon.sensor_type = self.sensor_type
@@ -194,15 +200,18 @@ class SensorBeacon:
         sensor_beacon.tick_last_update = self.tick_last_update
         sensor_beacon.flag_active = True
 
+
     def calc_factor(self):
         self.val_di = self.__discomfort_index_approximation(
             self.val_temp, self.val_humi)
         self.val_heat = self.__wbgt_approximation(
             self.val_temp, self.val_humi, flag_outside=False)
 
+
     # Index Calc ###
     def __discomfort_index_approximation(self, temp, humi):
         return (0.81 * temp) + 0.01 * humi * ((0.99 * temp) - 14.3) + 46.3
+
 
     def __wbgt_approximation(self, temp, humi, flag_outside=False):
         wbgt = 0
@@ -244,6 +253,7 @@ class SensorBeacon:
         logger.info("tick_last_update = %s", self.tick_last_update)
         logger.info("flag_active = %s", self.flag_active)
 
+
     def csv_format(self):
         str_data = str(self.tick_last_update) + "," + \
                    str(self.gateway) + "," + \
@@ -265,6 +275,30 @@ class SensorBeacon:
                    str(self.val_ay) + "," + \
                    str(self.val_az)
         return str_data
+
+
+    def json_format(self):
+        return json.dumps({
+            'tick_last_update': self.tick_last_update.isoformat(),
+            'gateway': self.gateway,
+            'address': self.bt_address,
+            'sensor_type': self.sensor_type,
+            'rssi': self.rssi,
+            'distance': self.distance,
+            'seq_num': self.seq_num,
+            'battery': self.val_battery,
+            'temp': self.val_temp,
+            'humi': self.val_humi,
+            'light': self.val_light,
+            'uv': self.val_uv,
+            'pressure': self.val_pressure,
+            'noise': self.val_noise,
+            'di': self.val_di,
+            'heat': self.val_heat,
+            'ax': self.val_ax,
+            'ay': self.val_ay,
+            'az': self.val_az
+        })
 
 
 def csv_header():
