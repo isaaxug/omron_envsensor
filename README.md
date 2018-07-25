@@ -36,7 +36,7 @@ sudo pip3 install pygattlib
 ### 補遺2 インストール
 
 ```shell
-sudo pip3 install https://github.com/isaaxug/omron_envsensor/archive/0.0.2.zip
+sudo pip3 install https://github.com/isaaxug/omron_envsensor/archive/0.0.3.zip
 ```
 
 ### 補遺3 サンプルスクリプトの使用方法
